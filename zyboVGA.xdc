@@ -1,7 +1,7 @@
 ## This file is based on the general .xdc for the ZYBO Rev B board
-## where only VGA and clock signals are kept.
+## VGA signals are uncommented, ready to be used in your project.
 
-## To use it in a project:
+## To use the rest of the signals in a project:
 ## - uncomment the lines corresponding to used pins
 ## - rename the used signals according to the project
 
