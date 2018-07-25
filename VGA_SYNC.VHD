@@ -5,6 +5,7 @@
 -- 
 -- Output ports and names adapted to ZYBO and provided xdc file
 -- Version 1 23 April 2018
+-- Version 2 25 July 2018: input color is now a bus
 ---------------------------------------------------
 
 LIBRARY IEEE;
@@ -22,7 +23,8 @@ USE IEEE.STD_LOGIC_UNSIGNED.all;
 
 ENTITY VGA_SYNC IS
 
-	PORT(clock_25Mhz, red, green, blue		: IN	STD_LOGIC; -- RGB inpputs (8 colors)
+	PORT(clock_25Mhz		: IN	STD_LOGIC;
+	         color_in				: IN STD_LOGIC_VECTOR(2 downto 0); -- (2):R (1):G (0):B
 		 vga_r, vga_b						: OUT STD_LOGIC_VECTOR(4 DOWNTO 0); -- 5-bit red and blue outputs
 		 vga_g								: OUT STD_LOGIC_VECTOR(5 DOWNTO 0); -- 6-bit green output
 		 vga_hs, vga_vs						: OUT	STD_LOGIC; -- sync outputs
@@ -31,12 +33,17 @@ ENTITY VGA_SYNC IS
 END VGA_SYNC;
 
 ARCHITECTURE a OF VGA_SYNC IS
+	SIGNAL red, green, blue		: STD_LOGIC; -- internal signals connected to inputs
 	SIGNAL red_out, green_out, blue_out		: STD_LOGIC;
 	SIGNAL horiz_sync, vert_sync 			: STD_LOGIC;
 	SIGNAL video_on, video_on_v, video_on_h : STD_LOGIC;
 	SIGNAL h_count, v_count 				: STD_LOGIC_VECTOR(9 DOWNTO 0);
 
 BEGIN
+
+ red <= color_in(2);
+ green <= color_in(1);
+ blue <= color_in(0);
 
 -- video_on is high only when RGB data is being displayed
  video_on <= video_on_H AND video_on_V;
