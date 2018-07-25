@@ -1,5 +1,5 @@
 -- Simple object representation on VGA screen
--- First version: F. MOll UPC May 2018 (not tested, use at your own risk)
+-- First version: F. Moll UPC May 2018 (not tested, use at your own risk)
 
 
 LIBRARY IEEE;
@@ -12,13 +12,14 @@ ENTITY screen_object IS
 
 	PORT(cx, cy		: IN	STD_LOGIC_VECTOR(5 downto 0); -- 64x64 object position 
 		 pixel_row, pixel_column		: IN STD_LOGIC_VECTOR(9 DOWNTO 0); -- coming from VGA _SYNC
-		 pixel_color : OUT STD_LOGIC_VECTOR(2 downto 0) -- object pixels
+		 pixel_color : OUT STD_LOGIC_VECTOR(2 downto 0) -- object pixel colr RGB
 		 ); -- video memory address counter
 
 END screen_object;
 
 ARCHITECTURE a OF screen_object IS
-	CONSTANT color_out : STD_LOGIC_VECTOR(2 downto 0) := "001"; -- color Blue
+	CONSTANT color_object : STD_LOGIC_VECTOR(2 downto 0) := "001"; -- color Blue
+	CONSTANT color_background : STD_LOGIC_VECTOR(2 downto 0) := "111"; -- color White
 	-- object position mask in 64x64 grid (16x16 pixels)
 	SIGNAL paint_object		: STD_LOGIC;
 	-- detailed object shape
@@ -34,7 +35,7 @@ BEGIN
 	-- Another example: checkerboard
 	-- object_shape <= paint_object and (pixel_column(2) xor pixel_row(2));
 		
-	pixel_color <= color_out when object_shape='1'
-					else "000";
+	pixel_color <= color_object when object_shape='1'
+					else color_background;
 	
 END architecture a;
