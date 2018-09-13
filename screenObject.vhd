@@ -1,5 +1,5 @@
 -- Simple object representation on VGA screen
--- First version: F. Moll UPC May 2018 (not tested, use at your own risk)
+-- First version: F. Moll UPC May-September 2018 
 
 
 LIBRARY IEEE;
@@ -28,10 +28,12 @@ ARCHITECTURE a OF screen_object IS
 BEGIN
 
 	-- check object coordinates against pixel row/column
-	paint_object <= '1' when (cx = pixel_column(9 downto 4)) AND (cy = pixel_row(9 downto 4)) else '0';
+	paint_object <= '1' when ((cx = pixel_column(9 downto 4)) AND (cy = pixel_row(9 downto 4)))
+	            else '0';
 	
 	-- Object shape. Example: square 8x8 pixels
 	object_shape <= paint_object and pixel_column(3) and pixel_row(3);
+	--object_shape <= paint_object;
 	-- Another example: checkerboard
 	-- object_shape <= paint_object and (pixel_column(2) xor pixel_row(2));
 		
