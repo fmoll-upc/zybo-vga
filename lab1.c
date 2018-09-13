@@ -1,7 +1,7 @@
 /*
- * lab1.c
+ * lab1.c demo code
  *
- *  Created on: 12/09/2018
+ *  Created on: 13/09/2018
  *      Author: francesc.moll
 */
 
@@ -33,7 +33,7 @@ int main (void)
 	XGpio_Initialize(&leds, XPAR_LEDS_DEVICE_ID);
 	XGpio_SetDataDirection(&leds, 1, 0x00000000); //output
 
-	XGpio_Initialize(&leds, XPAR_XPOS_DEVICE_ID);
+	XGpio_Initialize(&xpos, XPAR_XPOS_DEVICE_ID);
 	XGpio_SetDataDirection(&xpos, 1, 0x00000000); //output
 
 	while (1)
@@ -44,11 +44,11 @@ int main (void)
 	  xil_printf("Push Buttons Status %x\r\n", psb_check);
 
 
-// Write value of buttons to leds (example)
+// Write value of buttons to leds
 	  XGpio_DiscreteWrite(&leds, 1, psb_check);
 
 // Write value of buttons to xpos (example)
-	  XGpio_DiscreteWrite(&xpos, 1, psb_check);
+	  XGpio_DiscreteWrite(&xpos, 1, psb_check<<1);
 
 	  // Waiting cycles
 	  for (i=0; i<9999999; i++);
